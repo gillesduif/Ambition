@@ -1,56 +1,48 @@
-import os
+from flask import Flask
+from flask_cors import CORS
 import logging
-from flask import Flask, request, jsonify
+from config import Config
+from rembg import remove
+from PIL import Image
+import io
 
 # Configuratie en initialisatie
 app = Flask(__name__)
+CORS(app)
+app.config.from_object(Config)
 
 # Logging instellen
 logging.basicConfig(level=logging.INFO)
 
-# Upload map configureren
-UPLOAD_FOLDER = "data/uploads"
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
-
-# Home route
-@app.route("/", methods=["GET"])
-def home():
-    return "Welcome to the Holonoid Backend API!"
-
-# Upload route
-@app.route("/upload", methods=["POST"])
-def upload():
-    if "file" not in request.files:
-        logging.error("No file provided in the request")
-        return jsonify({"error": "No file provided"}), 400
-    
-    file = request.files["file"]
-    if file.filename == "":
-        logging.error("No file selected for upload")
-        return jsonify({"error": "No file selected"}), 400
-    
+# Preloading van het rembg-model met een dummy-afbeelding
+def preload_rembg_model():
     try:
-        # Bestand opslaan
-        file_path = os.path.join(app.config["UPLOAD_FOLDER"], file.filename)
-        file.save(file_path)
-        logging.info(f"File '{file.filename}' uploaded successfully")
-        return jsonify({"message": f"File '{file.filename}' uploaded successfully!"}), 200
+        logging.info("Preloading rembg model...")
+        # Maak een lege (1x1 pixel) transparante afbeelding
+        dummy_image = Image.new("RGBA", (1, 1), (255, 255, 255, 0))
+        dummy_bytes = io.BytesIO()
+        dummy_image.save(dummy_bytes, format="PNG")
+        dummy_bytes.seek(0)
+        # Verwerk de dummy-afbeelding om het model te preloaden
+        remove(dummy_bytes.getvalue())
+        logging.info("rembg model preloaded successfully.")
     except Exception as e:
-        logging.error(f"Error while saving file: {str(e)}")
-        return jsonify({"error": "Failed to save the file"}), 500
+        logging.error(f"Failed to preload rembg model: {e}")
 
-# Health check route
-@app.route("/health", methods=["GET"])
-def health_check():
-    return jsonify({"status": "Healthy"}), 200
+# Preload het model bij het starten van de app
+preload_rembg_model()
 
-# Error handling (voorbeeld)
-@app.errorhandler(404)
-def not_found(error):
-    logging.warning("404 error occurred")
-    return jsonify({"error": "Endpoint not found"}), 404
+# Importeren van routes
+from routes.home import home_bp
+from routes.upload import upload_bp  # Upload route inclusief achtergrondverwijdering
+from routes.status import status_bp
+from routes.health import health_bp
 
-# Start de applicatie
+# Blueprints registreren
+app.register_blueprint(home_bp, url_prefix="/")
+app.register_blueprint(upload_bp, url_prefix="/upload")
+app.register_blueprint(status_bp, url_prefix="/status")
+app.register_blueprint(health_bp, url_prefix="/health")
+
 if __name__ == "__main__":
     app.run(debug=True)

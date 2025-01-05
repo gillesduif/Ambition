@@ -7,3 +7,6 @@ numpy
 pandas
 opencv-python
 python-dotenv
+rembg
+pillow
+onnxruntime
