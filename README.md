@@ -62,29 +62,32 @@ ambition/
 ### Backend Setup
 
 1.  Clone the repository:
-    
+    ```
     git clone https://github.com/gillesduif/ambition.git
     cd ambition/backend
-        
+    ```    
     
 2.  Create a virtual environment and install dependencies:
-    
+
+    ```
     python -m venv venv
     source venv/bin/activate  # On Windows: venv\\Scripts\\activate
     pip install -r requirements.txt
-        
+    ``` 
     
-3.  Run the backend:
+4.  Run the backend:
     
+    ``` 
     python app.py
-        
+    ```
+      
     
 
 ### Frontend Setup
 
 1.  Navigate to the `frontend` directory:
     
-    cd ../frontend
+    `cd ../frontend`
         
     
 2.  Open `index.html` in your browser.
@@ -107,9 +110,9 @@ ambition/
     *   Form-data with key `file` and an image file as the value.
 
 Example cURL command:
-
+`
 curl -X POST -F "file=@/path/to/image.jpg" http://127.0.0.1:5000/upload
-
+`
 * * *
 
 🤝 Contributing
@@ -119,21 +122,22 @@ We welcome contributions! Here's how you can help:
 
 1.  Fork this repository.
 2.  Create a new branch:
-    
+    `
     git checkout -b feature-name
-        
+     `   
     
 3.  Commit your changes:
-    
+
+     ` 
     git commit -m "Description of feature"
-        
+     `   
     
-4.  Push your changes:
-    
+5.  Push your changes:
+    `
     git push origin feature-name
-        
+    `   
     
-5.  Open a pull request.
+6.  Open a pull request.
 
 * * *
 
