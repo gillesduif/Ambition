@@ -34,8 +34,6 @@ Stay tuned for a live demonstration of ▽mbition in action.
 
 * * *
 
-📁 Project Structure
---------------------
 
 📁 Project Structure
 --------------------
