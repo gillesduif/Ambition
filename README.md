@@ -37,11 +37,16 @@ Stay tuned for a live demonstration of ▽mbition in action.
 📁 Project Structure
 --------------------
 
+📁 Project Structure
+--------------------
+
 ambition/
 ├── backend/                 # Flask-based backend for AI processing
 │   ├── app.py               # Main backend application
 │   ├── routes/              # API endpoints for upload, status, and health
 │   ├── data/                # Storage for uploaded and processed files
+│   ├── models/              # AI models and logic
+│   ├── utils/               # Helper functions
 │   ├── config.py            # Configuration settings
 │   ├── tests/               # Unit tests for the backend
 │   └── requirements.txt     # Python dependencies
@@ -49,9 +54,17 @@ ambition/
 │   ├── index.html           # Main webpage
 │   ├── styles.css           # Styling for the webpage
 │   ├── scripts.js           # Frontend logic
+│   └── assets/              # Images, videos, and other resources
 ├── shared/                  # Shared assets and configurations
-│   ├── assets/              # Images, videos, and other resources
-│   ├── config/              # Global configurations
+│   ├── assets/              # Shared assets between backend and frontend
+│   │   ├── hologram/        # Holographic files and models
+│   │   └── README.md        # Description of shared resources
+│   ├── config/              # Shared configurations
+│   │   └── settings.json    # Global application settings
+│   └── docs/                # Documentation
+│       ├── API.md           # Detailed API documentation
+│       ├── FRONTEND.md      # Frontend developer guide
+│       └── README.md        # General shared documentation overview
 └── README.md                # This file
 
 * * *
@@ -62,6 +75,7 @@ ambition/
 ### Backend Setup
 
 1.  Clone the repository:
+
     ```
     git clone https://github.com/gillesduif/ambition.git
     cd ambition/backend
@@ -87,7 +101,7 @@ ambition/
 
 1.  Navigate to the `frontend` directory:
     
-    `cd ../frontend`
+    ```cd ../frontend```
         
     
 2.  Open `index.html` in your browser.
@@ -110,9 +124,9 @@ ambition/
     *   Form-data with key `file` and an image file as the value.
 
 Example cURL command:
-`
+```
 curl -X POST -F "file=@/path/to/image.jpg" http://127.0.0.1:5000/upload
-`
+```
 * * *
 
 🤝 Contributing
@@ -121,21 +135,24 @@ curl -X POST -F "file=@/path/to/image.jpg" http://127.0.0.1:5000/upload
 We welcome contributions! Here's how you can help:
 
 1.  Fork this repository.
+
 2.  Create a new branch:
-    `
+
+    ```
     git checkout -b feature-name
-     `   
+     ```   
     
 3.  Commit your changes:
 
-     ` 
+    ``` 
     git commit -m "Description of feature"
-     `   
+    ```   
     
 5.  Push your changes:
-    `
+
+    ```
     git push origin feature-name
-    `   
+    ```   
     
 6.  Open a pull request.
 
