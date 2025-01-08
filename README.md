@@ -34,13 +34,11 @@ Stay tuned for a live demonstration of ▽mbition in action.
 
 * * *
 
-📁 Project Structure
---------------------
 
 📁 Project Structure
 --------------------
 
-ambition/
+```ambition/
 ├── backend/                 # Flask-based backend for AI processing
 │   ├── app.py               # Main backend application
 │   ├── routes/              # API endpoints for upload, status, and health
@@ -66,7 +64,7 @@ ambition/
 │       ├── FRONTEND.md      # Frontend developer guide
 │       └── README.md        # General shared documentation overview
 └── README.md                # This file
-
+```
 * * *
 
 🛠️ Installation
