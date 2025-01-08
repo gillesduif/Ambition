@@ -2,9 +2,7 @@ from flask import Flask
 from flask_cors import CORS
 import logging
 from config import Config
-from rembg import remove
-from PIL import Image
-import io
+from utils.preloading import preload_models
 
 # Configuratie en initialisatie
 app = Flask(__name__)
@@ -14,23 +12,8 @@ app.config.from_object(Config)
 # Logging instellen
 logging.basicConfig(level=logging.INFO)
 
-# Preloading van het rembg-model met een dummy-afbeelding
-def preload_rembg_model():
-    try:
-        logging.info("Preloading rembg model...")
-        # Maak een lege (1x1 pixel) transparante afbeelding
-        dummy_image = Image.new("RGBA", (1, 1), (255, 255, 255, 0))
-        dummy_bytes = io.BytesIO()
-        dummy_image.save(dummy_bytes, format="PNG")
-        dummy_bytes.seek(0)
-        # Verwerk de dummy-afbeelding om het model te preloaden
-        remove(dummy_bytes.getvalue())
-        logging.info("rembg model preloaded successfully.")
-    except Exception as e:
-        logging.error(f"Failed to preload rembg model: {e}")
-
-# Preload het model bij het starten van de app
-preload_rembg_model()
+# Preload models (e.g., rembg, face tracking)
+preload_models(rembg=True, face_tracking=True)
 
 # Importeren van routes
 from routes.home import home_bp
